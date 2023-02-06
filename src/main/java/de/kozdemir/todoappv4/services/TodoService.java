@@ -1,14 +1,13 @@
-package de.kozdemir.todoappv3.service;
+package de.kozdemir.todoappv4.services;
 
-import de.kozdemir.todoappv3.model.Todo;
-import de.kozdemir.todoappv3.repository.TodoRepository;
+
+import de.kozdemir.todoappv4.model.Todo;
+import de.kozdemir.todoappv4.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Vector;
 
 @Service
 public class TodoService {

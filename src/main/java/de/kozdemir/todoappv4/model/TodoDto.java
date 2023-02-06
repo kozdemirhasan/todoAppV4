@@ -1,9 +1,7 @@
-package de.kozdemir.todoappv3.model;
+package de.kozdemir.todoappv4.model;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class TodoDto {

@@ -1,23 +1,16 @@
-package de.kozdemir.todoappv3.controller;
+package de.kozdemir.todoappv4.controller;
 
-import de.kozdemir.todoappv3.model.Todo;
-import de.kozdemir.todoappv3.model.TodoDto;
-import de.kozdemir.todoappv3.service.TodoService;
+import de.kozdemir.todoappv4.model.Todo;
+import de.kozdemir.todoappv4.model.TodoDto;
+import de.kozdemir.todoappv4.services.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.format.DateTimeFormatter;
-
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 @Controller
 public class TodoController {
@@ -27,7 +20,7 @@ public class TodoController {
 
     @GetMapping("/todos")
     public String getAllTodos(Model model) {
-        model.addAttribute("headline", "Todos");
+        model.addAttribute("title", "Todos");
         model.addAttribute("ac", "todos");
         model.addAttribute("new", true);
 
@@ -66,9 +59,7 @@ public class TodoController {
 
     @PostMapping("/todos/change")
     public String changeStatus(Integer id) {
-
         Todo t = todoService.findById(id).get();
-
         if (t.getComplete()) {
             t.setComplete(false);
             t.setModifiedDate(null);

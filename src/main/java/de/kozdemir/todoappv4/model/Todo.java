@@ -1,5 +1,4 @@
-package de.kozdemir.todoappv3.model;
-
+package de.kozdemir.todoappv4.model;
 
 
 import javax.persistence.*;
@@ -7,7 +6,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "todos")
 public class Todo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
     private int id;

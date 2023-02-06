@@ -1,7 +1,7 @@
-package de.kozdemir.todoappv3.controller;
+package de.kozdemir.todoappv4.controller;
 
-import de.kozdemir.todoappv3.model.Todo;
-import de.kozdemir.todoappv3.service.TodoService;
+import de.kozdemir.todoappv4.model.Todo;
+import de.kozdemir.todoappv4.services.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

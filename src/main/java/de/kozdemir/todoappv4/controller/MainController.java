@@ -1,4 +1,4 @@
-package de.kozdemir.todoappv3.controller;
+package de.kozdemir.todoappv4.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +14,8 @@ public class MainController {
         model.addAttribute("headline", "Herzlich Willkommen bei Spring");
         model.addAttribute("ac", "home");
         model.addAttribute("content", "Das ist das Haus von Nikigraus...");
-        return "standard"; // Verweist auf /WEB-INF/standard.jsp (siehe application.yaml)
+        return "standard"; // Verweist auf /WEB-INF/standard.jsp (siehe __application.yaml
+        // )
     }
 
     @GetMapping("/team")

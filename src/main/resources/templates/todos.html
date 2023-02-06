@@ -1,54 +1,108 @@
-<!DOCTYPE html>
-<html lang="de">
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ToDo App</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
 
-    <head th:replace="fragments.html :: head(${title})"></head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container ">
+        <form class="d-flex position-relative top-0 end-0" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<br>
+<main class="container">
+    <div class="row">
+        <div class="col">
+            <h1 th:text="${title}"></h1>
+            <hr>
+            <div th:if="${todoList.size()>0} ">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Created Date</th>
+                        <th>Modified Date</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;Compile</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="t : ${todoList}">
+                        <td th:text="${t.description}"></td>
+                        <td th:text="${t.createdDate}"></td>
+                        <td th:text="${t.createdDate}"></td>
 
-    <body>
-        <nav th:replace="fragments.html :: mainNav"></nav>
 
-        <main class="container">
-            <div class="row">
-                <div class="col">
-                    <h1 th:text="${title}"></h1>
-
-                    <div class="my-3">
-                        <a href="/products/new" th:utext="#{btn.product.new}" class="btn btn-success"></a>
-                    </div>
-
-                    <!-- table.table>(thead>tr>th*3)+(tbody>tr>td*3) -->
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Preis</th>
-                                <th>&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Links die von Thymeleaf generiert werden soll beginnen mit @ -->
-                            <tr th:each="p : ${produkte}">
-                                <td th:text="${p.name}"></td>
-                                <td th:text="${p.price}"></td>
-                                <td>
-                                    <a th:href="@{/products/buy/{id}(id=${p.id})}" th:utext="#{btn.buy}" class="btn btn-success"></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-
-                <div class="col">
-                    <ul>
-                        <li th:each="p : ${productsInCart}">
-                            <th:block th:text="${p.name}" /> : <th:block th:text="${p.price}" />
-                        </li>
-                    </ul>
-                </div>
+                        <td>
+                            <form action="/todos/delete" method="post">
+                                <input type="hidden" name="id" th:value="${t.id}">
+                                <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3"></i>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/todos/edit" method="get">
+                                <input type="hidden" name="id" th:value="${t.id}">
+                                <button type="submit" class="btn btn-outline-primary"><i
+                                        class="bi bi-pencil-square"></i>
+                                </button>
+                            </form>
+                        </td>
+                        <td th:if="${!t.complete}">
+                            <form action="/todos/change" method="post">
+                                <input type="hidden" name="id" th:value="${t.id}">
+                                <button type="submit" class="btn btn-outline-warning mx-lg-3"><i class="bi bi-app"></i>
+                                </button>
+                            </form>
+                        </td>
+                        <td th:if="${t.complete}">
+                            <form action="/todos/change" method="post">
+                                <input type="hidden" name="id" th:value="${t.id}">
+                                <button type="submit" class="btn btn-success mx-lg-3"><i class="bi bi-check-lg"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-        </main>
+            <div th:if="${todoList.size()<=0}">
+                <h2>ToDo list ist leer</h2>
+            </div>
+            <br>
+            <br>
+            <div class="col-sm-8 col-md-6 mb-5">
+                <form action="/todos" method="post">
+                    <div class="mb-3">
 
-        <th:block th:replace="fragments.html :: foot"></th:block>
-    </body>
+                        <input type="text" class="form-control" name="description" id="todo"
+                               placeholder="Add new Todo">
+                    </div>
+                    <div class="d-grid gap-2 d-md-block">
+                        <button type="submit" class="btn btn-primary  btn-lg" th:utext="#{btn.add}"></button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+
+    </div>
+</main>
+
+<script src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>
