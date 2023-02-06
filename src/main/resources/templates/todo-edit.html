@@ -1,0 +1,61 @@
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+
+
+
+<main class="container">
+    <div class="row">
+        <div class="col-sm-8 col-md-6 mb-5">
+            <h1>${headline}</h1>
+
+            <div class="my-3">
+                <a href="/todos" class="btn btn-warning">Zurück</a>
+            </div>
+
+            <form:form action="/todos/edit" method="post" modelAttribute="todo"><!-- product = Variable mit einem leeren Produkt -->
+
+            <form:hidden path="id"/>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <form:input class="form-control" path="description" /><!-- path = Eigenschaft des Objektes -->
+            </div>
+    <%--
+            <div class="mb-3">
+                <label for="createdDate" class="form-label">Beschreibung</label>
+                <form:input rows="5" class="form-control" path="createdDate"></form:input>
+            </div>
+
+            <div class="mb-3">
+                <label for="modifiedDate" class="form-label">Verfügbar ab</label>
+                <form:input type="datetime-local" class="form-control" path="modifiedDate"/>
+            </div>
+--%>
+            <button type="submit" class="btn btn-success">Speichern</button>
+            </form:form>
+
+
+        </div>
+    </div>
+</main>
+
+<script src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

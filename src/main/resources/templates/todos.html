@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+
+    <head th:replace="fragments.html :: head(${title})"></head>
+
+    <body>
+        <nav th:replace="fragments.html :: mainNav"></nav>
+
+        <main class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 th:text="${title}"></h1>
+
+                    <div class="my-3">
+                        <a href="/products/new" th:utext="#{btn.product.new}" class="btn btn-success"></a>
+                    </div>
+
+                    <!-- table.table>(thead>tr>th*3)+(tbody>tr>td*3) -->
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Preis</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Links die von Thymeleaf generiert werden soll beginnen mit @ -->
+                            <tr th:each="p : ${produkte}">
+                                <td th:text="${p.name}"></td>
+                                <td th:text="${p.price}"></td>
+                                <td>
+                                    <a th:href="@{/products/buy/{id}(id=${p.id})}" th:utext="#{btn.buy}" class="btn btn-success"></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="col">
+                    <ul>
+                        <li th:each="p : ${productsInCart}">
+                            <th:block th:text="${p.name}" /> : <th:block th:text="${p.price}" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <th:block th:replace="fragments.html :: foot"></th:block>
+    </body>
+</html>

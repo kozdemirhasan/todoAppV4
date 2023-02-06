@@ -1,0 +1,42 @@
+# application.yaml ist eine Alternative zu __application.properties
+spring:
+  datasource:
+    url: jdbc:h2:mem:todos_db
+    #url: jdbc:h2:file:~/todos_db
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto:
+  h2:
+    console:
+      enabled: true
+
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+    timeout:
+      seconds: 3600
+
+  messages:
+    encoding: UTF-8
+  # http:
+  #   encoding: UTF-8
+  thymeleaf:
+    encoding: UTF-8
+    mode: HTML5
+
+  #server:
+  #  tomcat:
+  #    uri-encoding: UTF-8
+
+  #port: 5555
+
+db:
+  reset: true
+
+ui:
+  language: en # de oder en

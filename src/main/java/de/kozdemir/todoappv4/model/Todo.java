@@ -1,0 +1,76 @@
+package de.kozdemir.todoappv3.model;
+
+
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+@Entity
+public class Todo implements Serializable {
+    @Id
+    @GeneratedValue
+    private int id;
+
+    @Column(length = 200)
+    private String description;
+
+    private Boolean complete;
+
+    private LocalDateTime createdDate;
+
+    private LocalDateTime modifiedDate;
+
+
+    public Todo() {
+    }
+
+    public Todo(int id, String description, Boolean complete, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+        this.id = id;
+        this.description = description;
+        this.complete = complete;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getComplete() {
+        return complete;
+    }
+
+    public void setComplete(Boolean complete) {
+        this.complete = complete;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(LocalDateTime modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+}
