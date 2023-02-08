@@ -1,7 +1,11 @@
 package de.kozdemir.todoappv4.model;
 
 
+import net.bytebuddy.implementation.bind.annotation.Empty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -15,6 +19,8 @@ public class Todo implements Serializable {
     private int id;
 
     @Column(length = 200)
+    @NotEmpty
+    @Size(min = 2, max = 150)
     private String description;
 
     private Boolean complete;
@@ -75,4 +81,15 @@ public class Todo implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Todo{");
+        sb.append("id=").append(id);
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", complete=").append(complete);
+        sb.append(", createdDate=").append(createdDate);
+        sb.append(", modifiedDate=").append(modifiedDate);
+        sb.append('}');
+        return sb.toString();
+    }
 }

@@ -1,15 +1,15 @@
-# __application.yaml ist eine Alternative zu application.properties
+# application.yaml ist eine Alternative zu __application.properties
 spring:
   datasource:
-    url: jdbc:h2:mem:todos_db
-    #url: jdbc:h2:file:~/todos_db
+    #url: jdbc:h2:mem:todos_db
+    url: jdbc:h2:file:~/todos_db
     username: sa
     password: password
     driver-class-name: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto:
+      ddl-auto: update
   h2:
     console:
       enabled: true
@@ -36,7 +36,7 @@ spring:
   #port: 5555
 
 db:
-  reset: true
+  reset: false
 
 ui:
-  language: en # de oder en
+  language: de # de oder en

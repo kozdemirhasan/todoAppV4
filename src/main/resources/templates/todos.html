@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -14,10 +14,19 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container ">
+        <a href="todos/new" role="button">
+            <button class="btn btn-outline-primary" type="button" th:utext="#{btn.new.todo}">Neue ToDo</button>
+        </a>
         <form class="d-flex position-relative top-0 end-0" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <input class="form-control me-2" type="search" placeholder="ToDo Search" aria-label="Search">
+            <button class="btn btn-outline-warning" type="submit" th:utext="#{btn.search}"></button>
         </form>
+        <div>
+            <h5 th:text="${emailName}" class="form-text"></h5>
+            <a href="/sess/logout">
+                <button class="btn btn-outline-danger btn-sm" type="button" th:utext="#{btn.logout}"></button>
+            </a>
+        </div>
     </div>
 </nav>
 <br>
@@ -30,21 +39,19 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Created Date</th>
-                        <th>Modified Date</th>
+                        <th th:utext="#{lbl.title}">Title</th>
+                        <th th:utext="#{lbl.created_date}"></th>
+                        <th th:utext="#{lbl.modifierd_date}"></th>
                         <th>&nbsp;</th>
                         <th>&nbsp;</th>
-                        <th>&nbsp;Compile</th>
+                        <th>&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="t : ${todoList}">
                         <td th:text="${t.description}"></td>
                         <td th:text="${t.createdDate}"></td>
-                        <td th:text="${t.createdDate}"></td>
-
-
+                        <td th:text="${t.modifiedDate}"></td>
                         <td>
                             <form action="/todos/delete" method="post">
                                 <input type="hidden" name="id" th:value="${t.id}">
@@ -63,7 +70,7 @@
                         <td th:if="${!t.complete}">
                             <form action="/todos/change" method="post">
                                 <input type="hidden" name="id" th:value="${t.id}">
-                                <button type="submit" class="btn btn-outline-warning mx-lg-3"><i class="bi bi-app"></i>
+                                <button type="submit" class="btn btn-outline-success mx-lg-3"><i class="bi bi-app"></i>
                                 </button>
                             </form>
                         </td>
@@ -78,27 +85,20 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="text-lg-end text-primary border-primary ">
+                <p class="text-lg-end text-primary fs-5"><a  href="/json">JSON Data import</a></p>
+            </div>
+
+
             <div th:if="${todoList.size()<=0}">
                 <h2>ToDo list ist leer</h2>
             </div>
             <br>
             <br>
-            <div class="col-sm-8 col-md-6 mb-5">
-                <form action="/todos" method="post">
-                    <div class="mb-3">
 
-                        <input type="text" class="form-control" name="description" id="todo"
-                               placeholder="Add new Todo">
-                    </div>
-                    <div class="d-grid gap-2 d-md-block">
-                        <button type="submit" class="btn btn-primary  btn-lg" th:utext="#{btn.add}"></button>
-                    </div>
-                </form>
-            </div>
 
         </div>
-
-
     </div>
 </main>
 

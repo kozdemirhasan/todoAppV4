@@ -38,6 +38,13 @@ public class TodoService {
 
         return repo.findById(id);
 
+
+    }
+
+    public Optional<Todo> search(String src) {
+
+//        return repo.findByFirstnameLike(src);
+
         /*
         Product product = null;
         for(Product p : products) {
@@ -47,6 +54,7 @@ public class TodoService {
         }
         return Optional.empty();
         */
+        return null;
     }
 
 }

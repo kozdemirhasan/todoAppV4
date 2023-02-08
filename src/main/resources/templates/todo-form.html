@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<main class="container">
+    <div class="row my-lg-5">
+        <div class="col">
+            <h3 th:utext="#{btn.todo.new}"></h3>
+
+            <div class="my-3">
+                <a href="/todos" class="btn btn-warning" th:utext="#{btn.back}"></a>
+            </div>
+
+            <div class="col-sm-8 col-md-6 mb-5">
+
+                <form th:action="@{/todos/add}" th:object="${todo}" method="post">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="mb-3">
+                        <label for="title" class="form-label" th:utext="#{form.lbl.title}"></label>
+                        <input type="text" class="form-control" name="description" id="todo" th:field="*{description}"
+                               placeholder="Add new Todo">
+                        <p style="color: crimson" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                           class="error"></p>
+                    </div>
+
+
+                    <div>
+                        <button type="submit" class="btn btn-primary" th:utext="#{btn.add}"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

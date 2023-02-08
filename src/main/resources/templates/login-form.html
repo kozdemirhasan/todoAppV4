@@ -5,40 +5,27 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Todo</title>
+    <title>Document</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 </head>
 <body>
-
 <main class="container">
     <div class="row">
-        <div class="col-sm-8 col-md-6 mb-5">
-            <h1>ToDo Bearbeiten</h1>
-
-            <div class="my-3">
-                <a href="/todos" class="btn btn-warning" th:utext="#{btn.back}"></a>
+        <div class="col-md-6 offset-3">
+            <h3 th:utext="#{txt.login}"></h3>
+            <div th:if="${error}" class="alert alert-danger my-3">
+                Fehler beim Login.
             </div>
-
-            <form action="/todos/edit" method="post">
-
-                <input type="hidden" name="id" th:value="${todo.get().getId()}"/>
-
-                <div class="mb-3">
-                    <label for="description" class="form-label"></label>
-                    <input class="form-control" id="description" name="description" th:value="${todo.get().getDescription()}"/>
-                </div>
-
-                <button type="submit" class="btn btn-success" th:utext="#{btn.save}"></button>
+            <form method="post" action="/sess/login">
+                <input type="text" class="form-control mb-4 " name="email" th:placeholder="#{usr.email}">
+                <input type="password" class="form-control mb-4" name="password" th:placeholder="#{usr.password}">
+                <button  th:utext="#{btn.signin}" class="btn btn-success">Einloggen</button>
             </form>
-
-
         </div>
     </div>
 </main>
-
 <script src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
