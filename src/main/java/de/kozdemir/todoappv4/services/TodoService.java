@@ -32,29 +32,16 @@ public class TodoService {
         repo.delete(todo);
     }
 
-
-
     public Optional<Todo> findById(Integer id) {
-
         return repo.findById(id);
-
 
     }
 
-    public Optional<Todo> search(String src) {
-
-//        return repo.findByFirstnameLike(src);
-
-        /*
-        Product product = null;
-        for(Product p : products) {
-            if(p.getId() == id) {
-                return Optional.of(p);
-            }
+    public List<Todo> search(String keyword) {
+        if (keyword != null) {
+            return repo.search(keyword);
         }
-        return Optional.empty();
-        */
-        return null;
+        return repo.findAll();
     }
 
 }

@@ -24,40 +24,20 @@ public class UserController {
 
     @GetMapping("login")
     public String loginForm(Model model) {
-        if (loginService.isLoggedIn()) // Wenn eingeloggt, dann redirect zu den Geheimdaten
-//            return "redirect:/sess/data";
+        if (loginService.isLoggedIn())
             return "redirect:/todos";
-
         return "login-form";
     }
 
     @PostMapping("login")
     public String login(String email, String password, Model model) {
-
         User user = userRepository.findByEmail(email);
-
         if (user != null && user.getPassword().equals(password)) {
             loginService.doLogIn(user);
-
-            System.out.println("giris basarili");
-//            return "redirect:/sess/data";
             return "redirect:/todos";
         }
-
         model.addAttribute("error", true);
-        System.out.println("giris BASARISIZ");
         return "login-form";
-    }
-
-    @GetMapping("data")
-    public String data(Model model) {
-        if (loginService.isLoggedIn()) {
-            model.addAttribute("data", "Hier sind die Daten: " + loginService.getUser().getId()
-                    + " - " + loginService.getUser().getEmail() );
-        } else {
-            model.addAttribute("data", "Die Daten darfst du nicht sehen...");
-        }
-        return "test";
     }
 
     @GetMapping("logout")

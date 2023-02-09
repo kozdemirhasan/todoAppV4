@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
@@ -34,13 +31,20 @@ public class TodoController {
     private TodoRepository todoRepository;
 
     @GetMapping("todos")
-    public String getAllTodos(Model model) {
+    public String getAllTodos(String keyword, Model model) {
         if (loginService.isLoggedIn()) {
             model.addAttribute("title", "Todos");
             model.addAttribute("ac", "todos");
             model.addAttribute("new", true);
 
-            List<Todo> todos = todoService.findAll();
+            List<Todo> todos;
+            if (keyword == null) {
+                todos = todoService.findAll();
+            }else {
+                todos = todoService.search(keyword);
+//                todos = todoRepository.findByFirstnameLike(keyword);
+            }
+
             List<TodoDto> newTodos = new TodoDto().convertorDateToString(todos); // Date to String format
 
             model.addAttribute("todoList", newTodos);
@@ -54,6 +58,15 @@ public class TodoController {
         }
         return "login-form";
     }
+
+//    @GetMapping("search")
+//    public String search(String keyword, Model model) {
+//        System.out.println(keyword);
+//        model.addAttribute("title", "Add new ToDo");
+//        System.out.println(todoService.search(keyword).size());
+//        return "todos";
+//    }
+
 
     @GetMapping("todos/new")
     public String newForm(Todo todo, Model model) {
@@ -128,24 +141,13 @@ public class TodoController {
         Gson gson = new Gson();
         try {
             String str = gson.toJson(todoService.findAll());
-            model.addAttribute("jsonTodos", str );
-        }catch (Exception e){
+            model.addAttribute("jsonTodos", str);
+        } catch (Exception e) {
             System.out.println("Hata olustu...");
             e.printStackTrace();
         }
-
-
-
         return "json";
     }
 
-
-
-    @GetMapping("search/{s}")
-    public String search(String s, Model model) {
-        model.addAttribute("title", "Add new ToDo");
-        todoService.search(s);
-        return "todos";
-    }
 
 }

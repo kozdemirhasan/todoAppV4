@@ -39,4 +39,4 @@ db:
   reset: false
 
 ui:
-  language: de # de oder en
+  language: en # de oder en

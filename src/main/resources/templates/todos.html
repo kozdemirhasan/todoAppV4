@@ -17,9 +17,9 @@
         <a href="todos/new" role="button">
             <button class="btn btn-outline-primary" type="button" th:utext="#{btn.new.todo}">Neue ToDo</button>
         </a>
-        <form class="d-flex position-relative top-0 end-0" role="search">
-            <input class="form-control me-2" type="search" placeholder="ToDo Search" aria-label="Search">
-            <button class="btn btn-outline-warning" type="submit" th:utext="#{btn.search}"></button>
+        <form action="/todos" method="get" class="d-flex position-relative top-0 end-0" role="search">
+            <input class="form-control me-2" type="search" name="keyword" value="" placeholder="ToDo Search" aria-label="Search">
+            <button  class="btn btn-outline-warning" type="submit" th:utext="#{btn.search}"></button>
         </form>
         <div>
             <h5 th:text="${emailName}" class="form-text"></h5>
