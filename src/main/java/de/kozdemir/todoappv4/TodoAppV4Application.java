@@ -25,7 +25,7 @@ public class TodoAppV4Application implements WebMvcConfigurer, CommandLineRunner
     @Value("${ui.language}")
     private String uiLanguage;
 
-    @Value("${db.reset}") // greift auf den Wert aus application.yaml zu
+    @Value("${db.reset}")
     private boolean dbReset;
 
     public static void main(String[] args) {
@@ -35,8 +35,8 @@ public class TodoAppV4Application implements WebMvcConfigurer, CommandLineRunner
     @Bean
     public LocaleResolver localeResolver() {
         Locale.setDefault(new Locale(uiLanguage));
-        //CookieLocaleResolver resolver = new CookieLocaleResolver(); // Sprache wird im Cookie des Browser gespeichert
-        SessionLocaleResolver resolver = new SessionLocaleResolver(); // Sprache wird in der Session des Servers gespeichert
+        //CookieLocaleResolver resolver = new CookieLocaleResolver();
+        SessionLocaleResolver resolver = new SessionLocaleResolver();
         resolver.setDefaultLocale(new Locale(uiLanguage));
         return resolver;
     }
@@ -47,6 +47,7 @@ public class TodoAppV4Application implements WebMvcConfigurer, CommandLineRunner
 
         if(dbReset) {
             userRepository.deleteAll();
+
             User admin = new User("hasanmurat@abc.com", "geheim123");
             userRepository.save(admin);
 

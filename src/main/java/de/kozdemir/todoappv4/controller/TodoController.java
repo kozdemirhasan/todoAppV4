@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("todos")
 public class TodoController {
 
     @Autowired
@@ -27,29 +28,28 @@ public class TodoController {
     @Autowired
     private LoginService loginService;
 
-    @Autowired
-    private TodoRepository todoRepository;
-
-    @GetMapping("todos")
+    @GetMapping("")
     public String getAllTodos(String keyword, Model model) {
+
         if (loginService.isLoggedIn()) {
-            model.addAttribute("title", "Todos");
+            model.addAttribute("title", "Todos App");
             model.addAttribute("ac", "todos");
             model.addAttribute("new", true);
 
             List<Todo> todos;
             if (keyword == null) {
                 todos = todoService.findAll();
-            }else {
+            } else {
+                model.addAttribute("keyword", keyword);
                 todos = todoService.search(keyword);
-//                todos = todoRepository.findByFirstnameLike(keyword);
             }
 
-            List<TodoDto> newTodos = new TodoDto().convertorDateToString(todos); // Date to String format
+//            List<TodoDto> newTodos = new TodoDto().convertorDateToString(todos); // Date to String format
+//            model.addAttribute("todoList", newTodos);
 
-            model.addAttribute("todoList", newTodos);
+             model.addAttribute("todoList", todos);
             model.addAttribute("emailName", loginService.getUser().getEmail());
-            if (newTodos.isEmpty())
+            if (todos.isEmpty())
                 model.addAttribute("em", true);
             else
                 model.addAttribute("em", false);
@@ -59,30 +59,23 @@ public class TodoController {
         return "login-form";
     }
 
-//    @GetMapping("search")
-//    public String search(String keyword, Model model) {
-//        System.out.println(keyword);
-//        model.addAttribute("title", "Add new ToDo");
-//        System.out.println(todoService.search(keyword).size());
-//        return "todos";
-//    }
-
-
-    @GetMapping("todos/new")
+    @GetMapping("new")
     public String newForm(Todo todo, Model model) {
         model.addAttribute("title", "Add new ToDo");
         return "todo-form";
     }
 
-    @PostMapping("todos/add")
-    public String newTodoAdd(@Valid Todo todo, BindingResult result, Model model) {
+    @PostMapping("add")
+    public String newTodo(@Valid Todo todo, BindingResult result, Model model) {
+
+        model.addAttribute("todo", new Todo());
         if (result.hasErrors()) {
             return "todo-form";
         }
-
         todo.setId(todo.getId());
         todo.setDescription(todo.getDescription());
-        todo.setCreatedDate(LocalDateTime.now()); //now
+        todo.setCreatedDate(todo.getCreatedDate()); //now
+//        todo.setCreatedDate(LocalDateTime.now()); //now
         todo.setModifiedDate(null); //Default Wert ist null
         todo.setComplete(false);
 
@@ -92,7 +85,7 @@ public class TodoController {
     }
 
 
-    @PostMapping("/todos/change")
+    @PostMapping("change")
     public String changeStatus(Integer id) {
         Todo t = todoService.findById(id).get();
         if (t.getComplete()) {
@@ -101,6 +94,7 @@ public class TodoController {
         } else {
             t.setComplete(true);
             t.setModifiedDate(LocalDateTime.now()); //modifierd time change
+
         }
 
         todoService.save(t);
@@ -108,7 +102,7 @@ public class TodoController {
         return "redirect:/todos";
     }
 
-    @PostMapping("/todos/delete")
+    @PostMapping("delete")
     public String delete(Integer id) {
 
         Todo todo = todoService.findById(id).get();
@@ -117,16 +111,17 @@ public class TodoController {
         return "redirect:/todos";
     }
 
-    @GetMapping("/todos/edit")
+    @GetMapping("edit")
     public String editGetForm(Integer id, Model model) {
         model.addAttribute("headline", "Todo Bearbeiten");
         model.addAttribute("ac", "todos");
-        model.addAttribute("todo", todoService.findById(id));
+        model.addAttribute("todo", todoService.findById(id).get());
+        model.addAttribute("title", "Edit todo");
         return "todo-form";
     }
 
 
-    @PostMapping("/todos/edit")
+    @PostMapping("edit")
     public String editTodo(Integer id, String description, Model model) {
         Todo t = todoService.findById(id).get();
         t.setDescription(description);

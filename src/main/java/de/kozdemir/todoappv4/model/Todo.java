@@ -2,6 +2,7 @@ package de.kozdemir.todoappv4.model;
 
 
 import net.bytebuddy.implementation.bind.annotation.Empty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -25,8 +26,12 @@ public class Todo implements Serializable {
 
     private Boolean complete;
 
+    @Column
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime createdDate;
 
+    @Column
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime modifiedDate;
 
 

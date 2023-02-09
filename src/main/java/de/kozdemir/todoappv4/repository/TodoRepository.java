@@ -13,9 +13,9 @@ import java.util.Optional;
 public interface TodoRepository extends JpaRepository<Todo, Integer> {
 
 
-    @Query("SELECT p FROM Todo p WHERE CONCAT(p.description, p.createdDate) LIKE %?1%")
+    @Query("SELECT p FROM Todo p WHERE p.description LIKE %?1%")
     public List<Todo> search(String keyword);
 
-    public List<Todo> findByFirstnameLike();
+
 
 }

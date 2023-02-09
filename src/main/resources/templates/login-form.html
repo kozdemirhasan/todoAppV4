@@ -11,16 +11,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<main class="container">
+<main class="container my-5">
     <div class="row">
-        <div class="col-md-6 offset-3">
+        <div class="col-md-4 offset-3 ">
             <h3 th:utext="#{txt.login}"></h3>
             <div th:if="${error}" class="alert alert-danger my-3">
                 Fehler beim Login.
             </div>
             <form method="post" action="/sess/login">
-                <input type="text" class="form-control mb-4 " name="email" th:placeholder="#{usr.email}">
-                <input type="password" class="form-control mb-4" name="password" th:placeholder="#{usr.password}">
+                <input type="text" class="form-control mb-4 " name="email" th:placeholder="#{usr.email}" value="hmk@abc.com">
+                <input type="password" class="form-control mb-4" name="password" th:placeholder="#{usr.password}" value="geheim123">
                 <button  th:utext="#{btn.signin}" class="btn btn-success">Einloggen</button>
             </form>
         </div>

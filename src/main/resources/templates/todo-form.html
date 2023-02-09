@@ -14,7 +14,8 @@
 <main class="container">
     <div class="row my-lg-5">
         <div class="col">
-            <h3 th:utext="#{btn.todo.new}"></h3>
+
+            <h3 th:utext="#{lbl.todo}"></h3>
 
             <div class="my-3">
                 <a href="/todos" class="btn btn-warning" th:utext="#{btn.back}"></a>
@@ -22,19 +23,24 @@
 
             <div class="col-sm-8 col-md-6 mb-5">
 
-                <form th:action="@{/todos/add}" th:object="${todo}" method="post">
+                <form  method="post" th:action="@{/todos/add}" th:object="${todo}">
                     <input type="hidden" th:field="*{id}">
                     <div class="mb-3">
                         <label for="title" class="form-label" th:utext="#{form.lbl.title}"></label>
                         <input type="text" class="form-control" name="description" id="todo" th:field="*{description}"
                                placeholder="Add new Todo">
-                        <p style="color: crimson" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                        <p style="color: rgba(210,26,103,0.35)" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
                            class="error"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" >Date-Time</label>
+                        <input type="datetime-local" class="form-control" name="dateTime" placeholder="Datum" th:field="*{createdDate}" >
                     </div>
 
 
                     <div>
-                        <button type="submit" class="btn btn-primary" th:utext="#{btn.add}"></button>
+                        <button class="btn btn-primary" th:utext="#{btn.add}" ></button>
                     </div>
                 </form>
             </div>
