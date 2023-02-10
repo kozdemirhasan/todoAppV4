@@ -46,6 +46,11 @@ public class Todo implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
+    public Todo(int id, String description) {
+        this.id = id;
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,6 +1,14 @@
 package de.kozdemir.todoappv4.controller;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 import de.kozdemir.todoappv4.model.Todo;
 import de.kozdemir.todoappv4.model.TodoDto;
 import de.kozdemir.todoappv4.repository.TodoRepository;
@@ -15,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -75,9 +84,9 @@ public class TodoController {
         todo.setId(todo.getId());
         todo.setDescription(todo.getDescription());
 
-        try{
+        try {
             todo.setCreatedDate(todo.getCreatedDate()); //now
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             todo.setCreatedDate(null);
         }
 
@@ -140,15 +149,17 @@ public class TodoController {
     }
 
     @GetMapping("json")
-    public String jsonExport(Model model) {
+    public String jsonImport(Model model) {
+
+        List<Todo> todos =  todoService.findAll();
+
         Gson gson = new Gson();
-        try {
-            String str = gson.toJson(todoService.findAll());
-            model.addAttribute("jsonTodos", str);
-        } catch (Exception e) {
-            System.out.println("Hata olustu...");
-            e.printStackTrace();
-        }
+
+        String jsonArray = gson.toJson(todos);
+
+        System.out.println(jsonArray);
+        model.addAttribute("jsonTodos", jsonArray);
+
         return "json";
     }
 
