@@ -1,6 +1,7 @@
 package de.kozdemir.todoappv4;
 
 import de.kozdemir.todoappv4.model.User;
+import de.kozdemir.todoappv4.repository.TodoRepository;
 import de.kozdemir.todoappv4.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,8 @@ public class TodoAppV4Application implements WebMvcConfigurer, CommandLineRunner
 
     @Value("${db.reset}")
     private boolean dbReset;
+    @Autowired
+    private TodoRepository todoRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(TodoAppV4Application.class, args);
@@ -46,6 +49,7 @@ public class TodoAppV4Application implements WebMvcConfigurer, CommandLineRunner
 
 
         if(dbReset) {
+            todoRepository.deleteAll();
             userRepository.deleteAll();
 
             User admin = new User("hasanmurat@abc.com", "geheim123");

@@ -34,6 +34,8 @@ public class Todo implements Serializable {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime modifiedDate;
 
+    @ManyToOne
+    private User user;
 
     public Todo() {
     }
@@ -89,6 +91,14 @@ public class Todo implements Serializable {
 
     public void setModifiedDate(LocalDateTime modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

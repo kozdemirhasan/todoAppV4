@@ -2,6 +2,7 @@ package de.kozdemir.todoappv4.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -16,6 +17,9 @@ public class User implements Serializable {
 
     @Column(length = 100)
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Todo> todos;
 
     public User() {
     }
@@ -47,5 +51,13 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Todo> getTodos() {
+        return todos;
+    }
+
+    public void setTodos(List<Todo> todos) {
+        this.todos = todos;
     }
 }
