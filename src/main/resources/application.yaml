@@ -36,7 +36,7 @@ spring:
   #port: 5555
 
 db:
-  reset: true
+  reset: true # erste "true" danach "false" auswahlen.// Users wird fest erstellt
 
 
 ui:
