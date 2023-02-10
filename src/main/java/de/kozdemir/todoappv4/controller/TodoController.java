@@ -44,10 +44,10 @@ public class TodoController {
                 todos = todoService.search(keyword);
             }
 
-//            List<TodoDto> newTodos = new TodoDto().convertorDateToString(todos); // Date to String format
-//            model.addAttribute("todoList", newTodos);
+            List<TodoDto> newTodos = new TodoDto().convertorDateToString(todos); // Date to String format
+            model.addAttribute("todoList", newTodos);
 
-             model.addAttribute("todoList", todos);
+//             model.addAttribute("todoList", todos);
             model.addAttribute("emailName", loginService.getUser().getEmail());
             if (todos.isEmpty())
                 model.addAttribute("em", true);
@@ -68,14 +68,22 @@ public class TodoController {
     @PostMapping("add")
     public String newTodo(@Valid Todo todo, BindingResult result, Model model) {
 
-        model.addAttribute("todo", new Todo());
+//        model.addAttribute("todo", new Todo());
         if (result.hasErrors()) {
             return "todo-form";
         }
         todo.setId(todo.getId());
         todo.setDescription(todo.getDescription());
-        todo.setCreatedDate(todo.getCreatedDate()); //now
+
+        try{
+            todo.setCreatedDate(todo.getCreatedDate()); //now
+        }catch (NullPointerException e){
+            todo.setCreatedDate(null);
+        }
+
 //        todo.setCreatedDate(LocalDateTime.now()); //now
+//        todo.setCreatedDate(null); //now
+
         todo.setModifiedDate(null); //Default Wert ist null
         todo.setComplete(false);
 

@@ -28,7 +28,7 @@
                     <div class="mb-3">
                         <label for="title" class="form-label" th:utext="#{form.lbl.title}"></label>
                         <input type="text" class="form-control" name="description" id="todo" th:field="*{description}"
-                               placeholder="Add new Todo">
+                               th:placeholder="#{lbl.addnewtodo}">
                         <p style="color: rgba(210,26,103,0.35)" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
                            class="error"></p>
                     </div>

@@ -34,7 +34,11 @@ public class TodoDto {
             todoDto = new TodoDto();
             todoDto.setId(t.getId());
             todoDto.setDescription(t.getDescription());
-            todoDto.setCreatedDate(t.getCreatedDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))); // Date to String
+            try {
+                todoDto.setCreatedDate(t.getCreatedDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))); // Date to String
+            }catch (NullPointerException e) {
+                todoDto.setCreatedDate("");
+            }
             try {
                 todoDto.setModifiedDate(t.getModifiedDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))); // Date to String
             } catch (NullPointerException e) {

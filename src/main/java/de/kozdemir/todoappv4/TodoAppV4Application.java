@@ -54,6 +54,9 @@ public class TodoAppV4Application implements WebMvcConfigurer, CommandLineRunner
             admin = new User("hmk@abc.com", "geheim123");
             userRepository.save(admin);
 
+            admin = new User("h.murat@abc.com", "geheim123");
+            userRepository.save(admin);
+
         }
     }
 }
