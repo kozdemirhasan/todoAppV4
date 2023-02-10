@@ -151,15 +151,16 @@ public class TodoController {
     @GetMapping("json")
     public String jsonImport(Model model) {
 
-        List<Todo> todos =  todoService.findAll();
+        List<Todo> todos = todoService.findAll();
 
         Gson gson = new Gson();
-
-        String jsonArray = gson.toJson(todos);
-
-        System.out.println(jsonArray);
-        model.addAttribute("jsonTodos", jsonArray);
-
+        try {
+            String jsonArray = gson.toJson(todos);
+//            System.out.println(jsonArray);
+            model.addAttribute("jsonTodos", jsonArray);
+        } catch (Exception e) {
+            model.addAttribute("jsonTodos", "Leider habe ich nicht Json datei exportiert zu geschafft :-( ");
+        }
         return "json";
     }
 
