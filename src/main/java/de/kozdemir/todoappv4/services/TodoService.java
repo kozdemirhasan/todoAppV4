@@ -1,6 +1,5 @@
 package de.kozdemir.todoappv4.services;
 
-
 import de.kozdemir.todoappv4.model.Todo;
 import de.kozdemir.todoappv4.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +43,10 @@ public class TodoService {
         return repo.findAll();
     }
 
+    public List<Todo> findByAllWithUserId(Long id) {
+        if (id != null) {
+            return repo.findByAllWithUserId(id);
+        }
+        return repo.findAll();
+    }
 }

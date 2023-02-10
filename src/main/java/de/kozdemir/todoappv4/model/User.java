@@ -9,16 +9,17 @@ import java.util.List;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USER_ID")
     private long id;
 
-    @Column(length = 50, unique = true)
+    @Column(length = 50, unique = true, name = "EMAIL")
     private String email;
 
-    @Column(length = 100)
+    @Column(length = 100, name = "PASSWORD")
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Todo> todos;
 
     public User() {

@@ -1,17 +1,7 @@
 package de.kozdemir.todoappv4.controller;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
 import de.kozdemir.todoappv4.model.Todo;
 import de.kozdemir.todoappv4.model.TodoDto;
-import de.kozdemir.todoappv4.repository.TodoRepository;
 import de.kozdemir.todoappv4.services.LoginService;
 import de.kozdemir.todoappv4.services.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("todos")
@@ -37,6 +24,7 @@ public class TodoController {
     @Autowired
     private LoginService loginService;
 
+
     @GetMapping("")
     public String getAllTodos(String keyword, Model model) {
 
@@ -47,16 +35,15 @@ public class TodoController {
 
             List<Todo> todos;
             if (keyword == null) {
-                todos = todoService.findAll();
+//                todos = todoService.findAll(); //alt version.
+                todos = todoService.findByAllWithUserId(loginService.getUser().getId());
             } else {
                 model.addAttribute("keyword", keyword);
                 todos = todoService.search(keyword);
             }
-
             List<TodoDto> newTodos = new TodoDto().convertorDateToString(todos); // Date to String format
             model.addAttribute("todoList", newTodos);
 
-//             model.addAttribute("todoList", todos);
             model.addAttribute("emailName", loginService.getUser().getEmail());
             if (todos.isEmpty())
                 model.addAttribute("em", true);
@@ -76,12 +63,11 @@ public class TodoController {
 
     @PostMapping("add")
     public String newTodo(@Valid Todo todo, BindingResult result, Model model) {
-
 //        model.addAttribute("todo", new Todo());
         if (result.hasErrors()) {
             return "todo-form";
         }
-        todo.setId(todo.getId());
+//        todo.setId(todo.getId());
         todo.setDescription(todo.getDescription());
 
         try {
@@ -90,11 +76,10 @@ public class TodoController {
             todo.setCreatedDate(null);
         }
 
-//        todo.setCreatedDate(LocalDateTime.now()); //now
-//        todo.setCreatedDate(null); //now
-
         todo.setModifiedDate(null); //Default Wert ist null
         todo.setComplete(false);
+
+        todo.setUser(loginService.getUser()); // ****
 
         todoService.save(todo);
 
@@ -111,20 +96,15 @@ public class TodoController {
         } else {
             t.setComplete(true);
             t.setModifiedDate(LocalDateTime.now()); //modifierd time change
-
         }
-
         todoService.save(t);
-
         return "redirect:/todos";
     }
 
     @PostMapping("delete")
     public String delete(Integer id) {
-
         Todo todo = todoService.findById(id).get();
         todoService.delete(todo);
-
         return "redirect:/todos";
     }
 
@@ -151,16 +131,10 @@ public class TodoController {
     @GetMapping("json")
     public String jsonImport(Model model) {
 
-        List<Todo> todos = todoService.findAll();
+//        List<Todo> todos = todoService.findAll();
+        List<Todo> todos = todoService.findByAllWithUserId(loginService.getUser().getId());
+        model.addAttribute("jsonTodos", todos);
 
-        Gson gson = new Gson();
-        try {
-            String jsonArray = gson.toJson(todos);
-//            System.out.println(jsonArray);
-            model.addAttribute("jsonTodos", jsonArray);
-        } catch (Exception e) {
-            model.addAttribute("jsonTodos", "Leider habe ich nicht Json datei exportiert zu geschafft :-( ");
-        }
         return "json";
     }
 

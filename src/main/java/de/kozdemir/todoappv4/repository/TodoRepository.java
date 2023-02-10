@@ -14,4 +14,8 @@ public interface TodoRepository extends JpaRepository<Todo, Integer> {
     @Query("SELECT t FROM Todo t WHERE lower(t.description) LIKE %?1%")
     public List<Todo> search(String keyword);
 
+    @Query("SELECT t FROM Todo t  where t.user.id = ?1")
+    public List<Todo>  findByAllWithUserId(Long id);
+
+
 }

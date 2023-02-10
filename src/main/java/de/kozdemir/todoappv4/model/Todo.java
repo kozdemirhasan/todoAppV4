@@ -1,7 +1,6 @@
 package de.kozdemir.todoappv4.model;
 
 
-import net.bytebuddy.implementation.bind.annotation.Empty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,24 +15,27 @@ public class Todo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "TODO_ID")
     private int id;
 
-    @Column(length = 200)
+    @Column(length = 200, name = "DESCRIPTION")
     @NotEmpty
     @Size(min = 2, max = 150)
     private String description;
 
+    @Column(name = "COMPLETE")
     private Boolean complete;
 
-    @Column
+    @Column(name = "CREATED_DATE")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime createdDate;
 
-    @Column
+    @Column(name = "MODIFIED_DATE")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime modifiedDate;
 
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     @ManyToOne
     private User user;
 

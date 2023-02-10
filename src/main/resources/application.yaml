@@ -1,4 +1,4 @@
-# application.yaml ist eine Alternative zu __application.properties
+
 spring:
   datasource:
     #url: jdbc:h2:mem:todos_db
@@ -36,7 +36,8 @@ spring:
   #port: 5555
 
 db:
-  reset: false
+  reset: true
+
 
 ui:
   language: en # de oder en
