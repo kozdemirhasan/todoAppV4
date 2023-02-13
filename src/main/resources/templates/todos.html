@@ -19,9 +19,15 @@
         </a>
         <form action="/todos" method="get" class="d-flex position-relative top-0 end-0" role="search">
             <input class="form-control me-2" type="search" name="keyword" th:value="${keyword}"
-                   placeholder="ToDo Search" aria-label="Search">
+                   th:placeholder="#{lbl.search}" aria-label="Search">
             <button class="btn btn-outline-warning" type="submit" th:utext="#{btn.search}"></button>
         </form>
+
+        <div>
+            <a href="?lang=de">DE</a>
+            <a href="?lang=en">EN</a >
+        </div>
+
         <div>
             <h5 th:text="${emailName}" class="form-text"></h5>
             <a href="/sess/logout">
@@ -31,11 +37,12 @@
     </div>
 </nav>
 <br>
+
 <main class="container">
     <div class="row">
         <div class="col">
             <h1 th:text="${title}"></h1>
-
+            <hr>
             <div th:if="${todoList.size()>0} ">
                 <table class="table">
                     <thead>
@@ -88,14 +95,14 @@
             </div>
 
             <div class="text-lg-end text-primary border-primary ">
-                <p class="text-lg-end text-primary fs-5"><a href="/todos/json">JSON Data import</a></p>
+                <p class="text-lg-end text-primary fs-5" ><a href="/todos/json" th:text="#{lbl.jsondataexport}"></a></p>
             </div>
 
 
             <div th:if="${todoList.size()<=0}">
                 <h2 th:text="#{lbl.todo.leer}"></h2>
             </div>
-            <br>
+            <b
             <br>
 
 
