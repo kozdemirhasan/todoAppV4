@@ -57,9 +57,16 @@
                     </thead>
                     <tbody>
                     <tr th:each="t : ${todoList}">
-                        <td th:text="${t.description}"></td>
-                        <td th:text="${t.createdDate}"></td>
-                        <td th:text="${t.modifiedDate}"></td>
+
+                        <td th:if="${t.complete}" class="text-decoration-line-through" th:text="${t.description}"></td>
+                        <td th:if="${!t.complete}"  th:text="${t.description}"></td>
+
+                        <td th:if="${t.complete}" class="text-decoration-line-through" th:text="${t.createdDate}"></td>
+                        <td th:if="${!t.complete}" th:text="${t.createdDate}"></td>
+
+                        <td th:if="${t.complete}" class="text-decoration-line-through"th:text="${t.modifiedDate}"></td>
+                        <td th:if="${!t.complete}" th:text="${t.modifiedDate}"></td>
+
                         <td>
                             <form action="/todos/delete" method="post">
                                 <input type="hidden" name="id" th:value="${t.id}">
